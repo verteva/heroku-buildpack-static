@@ -17,6 +17,8 @@ http {
 
   server_tokens off;
 
+  client_max_body_size <%= client_max_body_size %>;
+
 <% if logging['access'] %>
   access_log logs/access.log;
 <% else %>

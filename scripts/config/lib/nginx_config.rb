@@ -11,6 +11,7 @@ class NginxConfig
     https_only: false,
     basic_auth: false,
     basic_auth_htpasswd_path: "/app/.htpasswd",
+    client_max_body_size: "1m",
     worker_connections: 512,
     resolver: "8.8.8.8",
     logging: {
@@ -22,6 +23,7 @@ class NginxConfig
   def initialize(json_file)
     json = {}
     json = JSON.parse(File.read(json_file)) if File.exist?(json_file)
+    json["client_max_body_size"] ||= ENV["CLIENT_MAX_BODY_SIZE"] || DEFAULT[:client_max_body_size]
     json["worker_connections"] ||= ENV["WORKER_CONNECTIONS"] || DEFAULT[:worker_connections]
     json["port"] ||= ENV["PORT"] || 5000
     json["root"] ||= DEFAULT[:root]
